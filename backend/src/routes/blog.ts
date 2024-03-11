@@ -31,22 +31,119 @@ book.use("/*", async (c, next) => {
   }
 });
 
-book.post("/", (c) => {
+book.post("/", async (c) => {
+  const id = c.get("userId");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  return c.text("Post blog route");
+  const body = await c.req.json();
+  try {
+    const res = await prisma.post.create({
+      data: {
+        title: body.title,
+        content: body.content,
+        authorId: id,
+      },
+    });
+    return c.json({ id: res.id });
+  } catch (err) {
+    return c.json({ error: "Failed creating post" });
+  }
 });
 
-book.put("/", (c) => {
-  return c.text("Put blog route");
+book.put("/", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json();
+
+  if (body.title && body.content) {
+    try {
+      const updatePost = await prisma.post.update({
+        where: {
+          id: body.id,
+        },
+        data: {
+          title: body.title,
+          content: body.content,
+        },
+      });
+      return c.json({ id: updatePost.id });
+    } catch (err) {
+      c.status(403);
+      return c.text("Failed to upload the post");
+    }
+  } else if (body.title && !body.content) {
+    try {
+      const updatePost = await prisma.post.update({
+        where: {
+          id: body.id,
+        },
+        data: {
+          title: body.title,
+        },
+      });
+      return c.json({ id: updatePost.id });
+    } catch (err) {
+      c.status(403);
+      return c.text("Failed to upload the post");
+    }
+  } else if (!body.title && body.content) {
+    try {
+      const updatePost = await prisma.post.update({
+        where: {
+          id: body.id,
+        },
+        data: {
+          content: body.content,
+        },
+      });
+      return c.json({ id: updatePost.id });
+    } catch (err) {
+      c.status(403);
+      return c.text("Failed to upload the post");
+    }
+  }
+
+  return c.text("Post updated successfully");
 });
 
-book.get("/:id", (c) => {
+book.get("/:id", async (c) => {
   const id = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
 
-  return c.text(`Your given id is ${id}`);
+  try {
+    const res = await prisma.post.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return c.json({
+      post: res,
+    });
+  } catch (err) {
+    return c.json({
+      error: "Can't find with given id!!!",
+    });
+  }
+});
+
+book.get("/", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const res = await prisma.post.findMany({});
+
+    return c.json({ posts: res });
+  } catch (err) {
+    return c.json({ error: "Some error occured" });
+  }
 });
 
 export default book;
