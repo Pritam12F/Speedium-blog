@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { decode, sign, verify } from "hono/jwt";
+import { verify } from "hono/jwt";
+import { createPostInput, updatePostInput } from "@pritam12m/common";
 
 const book = new Hono<{
   Bindings: {
@@ -38,6 +39,16 @@ book.post("/", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = createPostInput.safeParse(body);
+
+  if (!success) {
+    c.status(411);
+    return c.json({
+      error: "Invalid inputs",
+    });
+  }
+
   try {
     const res = await prisma.post.create({
       data: {
@@ -58,6 +69,15 @@ book.put("/", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = updatePostInput.safeParse(body);
+
+  if (!success) {
+    c.status(411);
+    return c.json({
+      error: "Invalid inputs",
+    });
+  }
 
   if (body.title && body.content) {
     try {
@@ -107,7 +127,9 @@ book.put("/", async (c) => {
     }
   }
 
-  return c.text("Post updated successfully");
+  return c.json({
+    error: "You didn't send anything to update the post with",
+  });
 });
 
 book.get("/:id", async (c) => {
@@ -127,7 +149,7 @@ book.get("/:id", async (c) => {
     });
   } catch (err) {
     return c.json({
-      error: "Can't find with given id!!!",
+      error: "Can't find post with given id!!!",
     });
   }
 });
