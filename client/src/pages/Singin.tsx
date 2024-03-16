@@ -1,38 +1,28 @@
+import { InputBox } from "../components/InputLabel";
 import SmallH from "../components/SmallHeading";
 import { GrayText } from "../components/GreyText";
-import { InputBox } from "../components/InputLabel";
 import { Button } from "../components/Button";
 import { useRecoilState } from "recoil";
-import { usernameState, emailState, passwordState } from "../atoms/atoms";
+import { signInEmail, signInPass } from "../atoms/atoms";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const SignUp = () => {
-  const [username, setUsername] = useRecoilState(usernameState);
-  const [email, setEmail] = useRecoilState(emailState);
-  const [password, setPass] = useRecoilState(passwordState);
+function SignIn() {
+  const [email, setEmail] = useRecoilState(signInEmail);
+  const [pass, setPass] = useRecoilState(signInPass);
   const navigate = useNavigate();
 
   return (
     <div className="border-2 mt-20 w-1/3 mx-auto rounded-xl shadow-xl">
       <div className="flex flex-col items-center">
-        <SmallH content="Create an account" />
+        <SmallH content="Sign in to your account" />
         <GrayText
-          content="Already have an account?"
-          link="Login"
-          to="/signin"
+          content="Don't have an account?"
+          link="Sign up"
+          to="/signup"
         />
       </div>
       <div className="px-8 pb-8">
-        <InputBox
-          label="Username"
-          type="text"
-          placeholder="Enter your username"
-          id="1"
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
         <InputBox
           label="Email"
           type="text"
@@ -54,13 +44,12 @@ export const SignUp = () => {
       </div>
       <div className="flex justify-center pb-8">
         <Button
-          label="Sign Up"
+          label="Sign In"
           onClick={(e) => {
-            const link = import.meta.env.VITE_BACKEND_URL + "/user/signup";
+            const link = import.meta.env.VITE_BACKEND_URL + "/user/signin";
             const data = {
-              name: username,
               email: email,
-              password: password,
+              password: pass,
             };
             axios
               .post(link, data)
@@ -71,11 +60,13 @@ export const SignUp = () => {
               })
               .catch((err) => {
                 console.log(err);
-                alert("Incorrect inputs!!");
+                alert("Incorrect email or password");
               });
           }}
         />
       </div>
     </div>
   );
-};
+}
+
+export default SignIn;
