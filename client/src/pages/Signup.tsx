@@ -1,5 +1,3 @@
-import SmallH from "../components/SmallHeading";
-import { GrayText } from "../components/GreyText";
 import { InputBox } from "../components/InputLabel";
 import { Button } from "../components/Button";
 import { useRecoilState } from "recoil";
@@ -7,6 +5,8 @@ import { usernameState, emailState, passwordState } from "../atoms/atoms";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Quote } from "../components/Quote";
+import { SignupInput } from "@pritam12m/common";
+import { Header } from "../components/AuthHeader";
 
 export const SignUp = () => {
   const [username, setUsername] = useRecoilState(usernameState);
@@ -15,16 +15,9 @@ export const SignUp = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="flex flex-col sm:grid grid-cols-2">
       <div className="border-2 mt-32 mb-32 w-2/3 mx-auto rounded-xl shadow-xl">
-        <div className="flex flex-col items-center">
-          <SmallH content="Create an account" />
-          <GrayText
-            content="Already have an account?"
-            link="Login"
-            to="/signin"
-          />
-        </div>
+        <Header page="signup" />
         <div className="px-8 pb-8">
           <InputBox
             label="Username"
@@ -57,14 +50,14 @@ export const SignUp = () => {
         <div className="flex justify-center pb-6 pt-3">
           <Button
             label="Sign Up"
-            onClick={(e) => {
+            onClick={async (e) => {
               const link = import.meta.env.VITE_BACKEND_URL + "/user/signup";
-              const data = {
-                name: username,
+              const data: SignupInput = {
                 email: email,
+                name: username,
                 password: password,
               };
-              axios
+              await axios
                 .post(link, data)
                 .then((res) => {
                   const token = res.data.token;
