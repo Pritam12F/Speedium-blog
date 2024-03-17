@@ -1,9 +1,7 @@
 type MyFunctionType = (arg: React.ChangeEvent<HTMLInputElement>) => void;
 
 export type InputLabelType = {
-  label: string;
-  placeholder: string;
-  type: string;
+  label: "Username" | "Email" | "Password";
   id: string;
   onChange: MyFunctionType;
 };
@@ -18,10 +16,16 @@ export const InputBox = (props: InputLabelType) => {
         {props.label}
       </label>
       <input
-        type={props.type}
-        placeholder={props.placeholder}
-        id={props.id}
+        type={props.label === "Password" ? "password" : "text"}
+        placeholder={
+          props.label === "Password"
+            ? "Enter your password"
+            : props.label === "Email"
+            ? "youremail@gmail.com"
+            : "Enter your username"
+        }
         className="border-2 px-2 py-1 rounded-lg w-full ml-auto my-auto"
+        id={props.id}
         onChange={props.onChange}
       ></input>
     </div>
