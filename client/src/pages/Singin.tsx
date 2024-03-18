@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { Quote } from "../components/Quote";
 import { Header } from "../components/AuthHeader";
 import { handleSignin } from "../utils/OnClickHandlers";
+import { useState } from "react";
+import { ErrorSignin } from "../components/Alerts";
 
 function SignIn() {
   const [email, setEmail] = useRecoilState(signInEmail);
   const [pass, setPass] = useRecoilState(signInPass);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -36,10 +39,11 @@ function SignIn() {
           <Button
             label="Sign In"
             onClick={() => {
-              handleSignin(email, pass, navigate);
+              handleSignin(email, pass, navigate, setError);
             }}
           />
         </div>
+        {error ? <ErrorSignin /> : null}
       </div>
       <Quote />
     </div>

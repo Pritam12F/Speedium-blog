@@ -6,7 +6,8 @@ export const handleSignup = async (
   username: string,
   email: string,
   password: string,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  setError: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const link = import.meta.env.VITE_BACKEND_URL + "/user/signup";
   const data: SignupInput = {
@@ -21,16 +22,17 @@ export const handleSignup = async (
       localStorage.setItem("speedium-token", token);
       navigate("/blogs");
     })
-    .catch((err) => {
-      console.log(err);
-      alert("Incorrect inputs!!");
+    .catch((err: Error) => {
+      console.log("Error occured: ", err);
+      setError(true);
     });
 };
 
 export const handleSignin = async (
   email: string,
   pass: string,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  setError: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const link = import.meta.env.VITE_BACKEND_URL + "/user/signin";
   const data: SigninInput = {
@@ -44,8 +46,8 @@ export const handleSignin = async (
       localStorage.setItem("speedium-token", token);
       navigate("/blogs");
     })
-    .catch((err) => {
-      console.log(err);
-      alert("Incorrect email or password");
+    .catch((err: Error) => {
+      console.log("Error occured: ", err);
+      setError(true);
     });
 };

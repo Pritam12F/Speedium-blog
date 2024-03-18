@@ -6,12 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { Quote } from "../components/Quote";
 import { Header } from "../components/AuthHeader";
 import { handleSignup } from "../utils/OnClickHandlers";
+import { useState } from "react";
+import { ErrorSignup } from "../components/Alerts";
 
 export const SignUp = () => {
   const [username, setUsername] = useRecoilState(usernameState);
   const [email, setEmail] = useRecoilState(emailState);
   const [password, setPass] = useRecoilState(passwordState);
   const navigate = useNavigate();
+  const [error, setError] = useState(false);
 
   return (
     <div className="flex flex-col sm:grid grid-cols-2">
@@ -44,10 +47,11 @@ export const SignUp = () => {
           <Button
             label="Sign Up"
             onClick={() => {
-              handleSignup(username, email, password, navigate);
+              handleSignup(username, email, password, navigate, setError);
             }}
           />
         </div>
+        {error ? <ErrorSignup /> : null}
       </div>
       <Quote />
     </div>
