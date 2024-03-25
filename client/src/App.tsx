@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SignUp } from "./pages/Signup";
 import { RecoilRoot } from "recoil";
 import SignIn from "./pages/Singin";
+import { Blog } from "./pages/Blog";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/blogs" element={<div>Blog route</div>} />
+          <Route path="/blogs" element={<Blog />} />
           <Route path="*" element={<div>Unknown route</div>} />
         </Routes>
       </BrowserRouter>

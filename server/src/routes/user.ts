@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
-import { sign } from "hono/jwt";
+import { jwt, sign, verify } from "hono/jwt";
 import { signupInput, signinInput } from "@pritam12m/common";
 
 const book = new Hono<{
@@ -74,6 +74,28 @@ book.post("/signin", async (c) => {
   const token = await sign({ user_id: user.id }, c.env.JWT_SECRET);
 
   return c.json({ user, token });
+});
+
+book.post("/finduser", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json();
+  const token = body.token;
+
+  try {
+    const decoded = await verify(token, c.env.JWT_SECRET);
+    const user = await prisma.user.findUnique({
+      where: {
+        id: decoded.user_id,
+      },
+    });
+
+    return c.json({ name: user?.name });
+  } catch (err) {
+    return c.text("ERROR!!!!");
+  }
 });
 
 export default book;
