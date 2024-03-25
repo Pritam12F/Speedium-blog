@@ -13,7 +13,7 @@ export const Navbar = (props: NavbarType) => {
         <div className="text-2xl font-semibold mx-4">Speedium</div>
       </div>
       <div className="flex">
-        <div className="mx-10 bg-green-400 rounded-full w-12 h-12 flex justify-center items-center">
+        <div className="mx-10 bg-green-400 rounded-full w-12 h-12 flex justify-center items-center font-semibold">
           {props.initial}
         </div>
         <Button
