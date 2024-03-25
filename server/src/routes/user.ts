@@ -68,6 +68,7 @@ book.post("/signin", async (c) => {
     },
   });
   if (!user) {
+    c.status(411);
     return c.json({ error: "There is no such user" });
   }
   const token = await sign({ user_id: user.id }, c.env.JWT_SECRET);
