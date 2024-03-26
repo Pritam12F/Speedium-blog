@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const FindUserInit = () => {
+export const useUserInit = () => {
   const [userInitial, setUserInitial] = useState("");
 
   useEffect(() => {
@@ -34,9 +34,10 @@ export interface MyObject {
   content: string;
   published: boolean;
   authorId: string;
+  author: string;
 }
 
-export const FindBlogPosts = () => {
+export const useBlogPosts = () => {
   const [posts, setPosts] = useState<MyObject[]>([]);
 
   useEffect(() => {

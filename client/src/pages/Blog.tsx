@@ -1,15 +1,19 @@
 import { Card } from "../components/BlogCards";
 import { Navbar } from "../components/Navbar";
-import { FindBlogPosts, FindUserInit, MyObject } from "../hooks";
+import { useBlogPosts, useUserInit } from "../hooks";
 
 export const Blog = () => {
-  const firstInitial = FindUserInit();
-  const posts = FindBlogPosts();
+  const firstInitial = useUserInit();
+  const posts = useBlogPosts().posts;
 
   return (
     <div>
       <Navbar initial={firstInitial.toUpperCase()} />
-      <Card posts={posts} />
+      <div className="flex flex-col m-4">
+        {posts
+          ? posts.map((el, index) => <Card post={el} key={index} />)
+          : null}
+      </div>
     </div>
   );
 };

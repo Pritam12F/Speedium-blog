@@ -160,7 +160,20 @@ book.get("/", async (c) => {
   }).$extends(withAccelerate());
 
   try {
-    const res = await prisma.post.findMany({});
+    const res = await prisma.post.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        published: true,
+        authorId: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
 
     return c.json({ posts: res });
   } catch (err) {
