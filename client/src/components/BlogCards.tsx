@@ -1,15 +1,24 @@
 import { useEffect } from "react";
-import { MyObject } from "../hooks";
 
-export const Card = (props) => {
-  const posts: MyObject = props.post;
+interface cardProps {
+  author: {
+    name: string;
+  };
+  authorId: string;
+  content: string;
+  id: string;
+  published: boolean;
+  title: string;
+}
+export const Card = ({ post }: { post: cardProps }) => {
+  const posts: cardProps = post;
 
   useEffect(() => {
     console.log(posts);
   }, []);
 
   return (
-    <div className="border-2 shadow-lg rounded-md p-5">
+    <div className="border-2 shadow-lg rounded-md p-5 min-w-full">
       <div className="flex">
         <div className="bg-red-200 w-7 h-7 rounded-full flex justify-center items-center text-xs mr-3 font-semibold">
           {posts.author.name[0].toUpperCase()}

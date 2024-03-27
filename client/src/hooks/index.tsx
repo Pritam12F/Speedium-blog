@@ -4,13 +4,13 @@ import { useRecoilState } from "recoil";
 import { postsAtom, userInitial } from "../atoms/atoms";
 
 export const useUserInit = () => {
-  const [userInit, setUserInit] = useRecoilState<string>(userInitial)
+  const [userInit, setUserInit] = useRecoilState<string>(userInitial);
 
   useEffect(() => {
     const token = localStorage.getItem("speedium-token");
     const link = import.meta.env.VITE_BACKEND_URL + "/user/finduser";
 
-    const user = axios
+    axios
       .post(link, {
         token: token,
       })
@@ -22,8 +22,8 @@ export const useUserInit = () => {
           setUserInit(name[0]);
         }
       })
-      .catch((err) => {
-        console.log("Failed");
+      .catch((err: Error) => {
+        console.log("Failed, error: ", err);
       });
   }, []);
 
