@@ -4,7 +4,7 @@ import { useBlogPosts, useUserInit } from "../hooks";
 
 export const Blog = () => {
   const firstInitial = useUserInit();
-  const posts = useBlogPosts().posts;
+  const posts = useBlogPosts();
 
   return (
     <div>

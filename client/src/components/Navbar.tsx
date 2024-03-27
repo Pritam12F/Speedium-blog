@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
+import { useSetRecoilState } from "recoil";
+import { userInitial } from "../atoms/atoms";
 
 type NavbarType = {
   initial: string;
 };
 export const Navbar = (props: NavbarType) => {
   const navigate = useNavigate();
+  const setUserInit = useSetRecoilState(userInitial)
 
   return (
     <div className="flex justify-between items-center shadow-lg py-1 sticky top-0 bg-slate-200 rounded-b-lg">
@@ -21,6 +24,7 @@ export const Navbar = (props: NavbarType) => {
           onClick={() => {
             localStorage.removeItem("speedium-token");
             navigate("/signin");
+            setUserInit("");
           }}
         />
       </div>

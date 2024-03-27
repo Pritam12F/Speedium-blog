@@ -24,3 +24,13 @@ export const signInPass = atom({
   key: "signinpass",
   default: "",
 });
+
+export const userInitial = atom({
+  key: "userInitial",
+  default: "",
+});
+
+export const postsAtom = atom({
+  key: "MyObject",
+  default: [],
+})

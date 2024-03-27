@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { postsAtom, userInitial } from "../atoms/atoms";
 
 export const useUserInit = () => {
-  const [userInitial, setUserInitial] = useState("");
+  const [userInit, setUserInit] = useRecoilState<string>(userInitial)
 
   useEffect(() => {
     const token = localStorage.getItem("speedium-token");
@@ -15,9 +17,9 @@ export const useUserInit = () => {
       .then((res) => {
         const name = res.data.name;
         if (!name) {
-          setUserInitial("A");
+          setUserInit("A");
         } else {
-          setUserInitial(name[0]);
+          setUserInit(name[0]);
         }
       })
       .catch((err) => {
@@ -25,7 +27,7 @@ export const useUserInit = () => {
       });
   }, []);
 
-  return userInitial;
+  return userInit;
 };
 
 export interface MyObject {
@@ -38,7 +40,7 @@ export interface MyObject {
 }
 
 export const useBlogPosts = () => {
-  const [posts, setPosts] = useState<MyObject[]>([]);
+  const [posts, setPosts] = useRecoilState(postsAtom);
 
   useEffect(() => {
     const token = localStorage.getItem("speedium-token");
@@ -55,7 +57,7 @@ export const useBlogPosts = () => {
     axios
       .request(config)
       .then((res) => {
-        setPosts(res.data);
+        setPosts(res.data.posts);
       })
       .catch((err: Error) => {
         console.log(err);
