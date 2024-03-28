@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-interface cardProps {
+export interface cardProps {
   author: {
     name: string;
   };

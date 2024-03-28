@@ -51,3 +51,5 @@ export const handleSignin = async (
       setError(true);
     });
 };
+
+export const handleUpdate = async () => {};
