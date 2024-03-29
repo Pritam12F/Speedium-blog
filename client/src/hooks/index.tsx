@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { postsAtom, userInitial } from "../atoms/atoms";
+import { postsAtom, userInitial, userId_ } from "../atoms/atoms";
 
 export const useUserInit = () => {
   const [userInit, setUserInit] = useRecoilState<string>(userInitial);
+  const [userId, setUserId] = useRecoilState<string>(userId_);
 
   useEffect(() => {
     const token = localStorage.getItem("speedium-token");
@@ -20,6 +21,7 @@ export const useUserInit = () => {
           setUserInit("A");
         } else {
           setUserInit(name[0]);
+          setUserId(res.data.userId);
         }
       })
       .catch((err: Error) => {
@@ -27,7 +29,7 @@ export const useUserInit = () => {
       });
   }, []);
 
-  return userInit;
+  return { userInit, userId };
 };
 
 export interface MyObject {

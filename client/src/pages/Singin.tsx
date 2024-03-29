@@ -16,7 +16,7 @@ function SignIn() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col sm:grid grid-cols-2">
+    <div className="flex flex-col h-screen sm:grid grid-cols-2">
       <div className="border-2 mt-32 mb-56 w-2/3 mx-auto rounded-xl shadow-xl grid-flow-col">
         <Header page="signin" />
         <div className="px-8 pb-8">

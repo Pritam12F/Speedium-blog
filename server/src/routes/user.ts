@@ -92,7 +92,7 @@ book.post("/finduser", async (c) => {
       },
     });
 
-    return c.json({ name: user?.name });
+    return c.json({ name: user?.name, userId: user?.id });
   } catch (err) {
     return c.text("ERROR!!!!");
   }

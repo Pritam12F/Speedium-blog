@@ -33,4 +33,9 @@ export const userInitial = atom({
 export const postsAtom = atom({
   key: "MyObject",
   default: [],
-})
+});
+
+export const userId_ = atom({
+  key: "userId",
+  default: "A",
+});

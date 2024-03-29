@@ -17,7 +17,7 @@ export const SignUp = () => {
   const [error, setError] = useState(false);
 
   return (
-    <div className="flex flex-col sm:grid grid-cols-2">
+    <div className="flex flex-col h-screen sm:grid grid-cols-2">
       <div className="border-2 mt-32 mb-32 w-2/3 mx-auto rounded-xl shadow-xl">
         <Header page="signup" />
         <div className="px-8 pb-8">

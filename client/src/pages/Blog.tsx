@@ -5,13 +5,13 @@ import { Navbar } from "../components/Navbar";
 import { useBlogPosts, useUserInit } from "../hooks";
 
 export const Blog = () => {
-  const firstInitial = useUserInit();
+  const { userInit } = useUserInit();
   const posts = useBlogPosts();
   const navigate = useNavigate();
 
   return (
     <div>
-      <Navbar initial={firstInitial.toUpperCase()} />
+      <Navbar initial={userInit.toUpperCase()} />
       <div className="flex justify-center mt-4">
         <Button
           label="Create new Post"
