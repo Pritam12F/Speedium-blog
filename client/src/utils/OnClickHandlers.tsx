@@ -52,4 +52,33 @@ export const handleSignin = async (
     });
 };
 
-export const handleUpdate = async () => {};
+export const handleCreate = async (
+  title: string,
+  content: string,
+  userId: string
+) => {
+  const link = import.meta.env.VITE_BACKEND_URL + "/blog";
+  const data: {
+    title: string;
+    content: string;
+    userId: string;
+  } = {
+    title: title,
+    content: content,
+    userId: userId,
+  };
+  const config = {
+    headers: {
+      Authorization: localStorage.getItem("speedium-token"),
+    },
+    data,
+  };
+  await axios
+    .post(link, config)
+    .then((res) => {
+      console.log("Successfully created!!!");
+    })
+    .catch((err) => {
+      console.log("Successfully failed", err);
+    });
+};

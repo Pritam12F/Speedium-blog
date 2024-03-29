@@ -14,9 +14,12 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/blogs" element={<Blog />} />
-          <Route path="/blogs/create" element={<CreateBlog />} />
+          <Route path="/blogs/create" element={<CreateBlog label="Create" />} />
           <Route path="/blogs/:id" element={<FullBlog />} />
-          <Route path="/blogs/:id/update" element={<CreateBlog />} />
+          <Route
+            path="/blogs/:id/update"
+            element={<CreateBlog label="Update" />}
+          />
           <Route path="*" element={<div>Unknown route</div>} />
         </Routes>
       </BrowserRouter>
