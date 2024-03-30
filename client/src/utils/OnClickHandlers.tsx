@@ -55,30 +55,67 @@ export const handleSignin = async (
 export const handleCreate = async (
   title: string,
   content: string,
-  userId: string
+  userId: string,
+  setError: React.Dispatch<React.SetStateAction<boolean>>,
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const link = import.meta.env.VITE_BACKEND_URL + "/blog";
-  const data: {
-    title: string;
-    content: string;
-    userId: string;
-  } = {
+  const data = {
     title: title,
     content: content,
-    userId: userId,
+    authorId: userId,
   };
   const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: link,
     headers: {
       Authorization: localStorage.getItem("speedium-token"),
     },
-    data,
+    data: data,
   };
-  await axios
-    .post(link, config)
-    .then((res) => {
-      console.log("Successfully created!!!");
+  axios
+    .request(config)
+    .then((response) => {
+      setError(false);
+      setSuccess(true);
     })
-    .catch((err) => {
-      console.log("Successfully failed", err);
+    .catch((error: Error) => {
+      setSuccess(false);
+      setError(true);
+    });
+};
+
+export const handleUpdate = async (
+  title: string,
+  content: string,
+  id: string | undefined,
+  setError: React.Dispatch<React.SetStateAction<boolean>>,
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const link = import.meta.env.VITE_BACKEND_URL + "/blog";
+  const data = {
+    title: title,
+    content: content,
+    id: id,
+  };
+  const config = {
+    method: "put",
+    maxBodyLength: Infinity,
+    url: link,
+    headers: {
+      Authorization: localStorage.getItem("speedium-token"),
+    },
+    data: data,
+  };
+  axios
+    .request(config)
+    .then((response) => {
+      setError(false);
+      setSuccess(true);
+    })
+    .catch((error: Error) => {
+      setSuccess(false);
+      setError(true);
     });
 };

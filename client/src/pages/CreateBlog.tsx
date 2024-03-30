@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { userId_ } from "../atoms/atoms";
+import { userId_, userInitial } from "../atoms/atoms";
 import { Button } from "../components/Button";
 import { Navbar } from "../components/Navbar";
-import { useUserInit } from "../hooks";
-import { handleCreate } from "../utils/OnClickHandlers";
+import { handleCreate, handleUpdate } from "../utils/OnClickHandlers";
+import { ErrorCrorUp, SuccessCrorUp } from "../components/Alerts";
+import { useParams } from "react-router-dom";
 
 interface createOrUpdate {
   label: "Create" | "Update";
@@ -14,7 +15,10 @@ export const CreateBlog = (props: createOrUpdate) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const userId = useRecoilValue(userId_);
-  const { userInit } = useUserInit();
+  const userInit = useRecoilValue(userInitial);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { id } = useParams();
 
   useEffect(() => {
     console.log(userId);
@@ -23,7 +27,7 @@ export const CreateBlog = (props: createOrUpdate) => {
   return (
     <div className="h-screen bg-gradient-to-br from-blue-500 to-green-500">
       <Navbar initial={userInit.toUpperCase()} />
-      <div className="flex flex-col max-w-md rounded-lg shadow-md p-5 mx-auto my-32 bg-green-300">
+      <div className="flex flex-col max-w-3xl rounded-lg shadow-md p-5 mx-auto my-32 bg-green-300">
         <div className="font-semibold text-2xl mx-auto">
           {props.label === "Create" ? "Create a post" : "Update a Post"}
         </div>
@@ -41,26 +45,29 @@ export const CreateBlog = (props: createOrUpdate) => {
             }}
           ></input>
         </div>
-        <div className="flex flex-col my-7">
+        <div className="flex flex-col my-5">
           <label htmlFor="content" className="font-semibold">
             Content
           </label>
-          <input
-            type="text"
+          <textarea
             placeholder="Enter your content"
-            className="p-1 mt-4 rounded-lg"
+            className="p-1 mt-4 rounded-lg min-h-40 text-start justify-start"
             id="content"
             onChange={(e) => {
               setContent(e.target.value);
             }}
-          ></input>
+          ></textarea>
         </div>
         <Button
           label={props.label === "Create" ? "Create post" : "Update Post"}
           onClick={() => {
-            handleCreate(title, content, userId);
+            props.label === "Create"
+              ? handleCreate(title, content, userId, setError, setSuccess)
+              : handleUpdate(title, content, id, setError, setSuccess);
           }}
         />
+        {error ? <ErrorCrorUp label={props.label} /> : null}
+        {success ? <SuccessCrorUp label={props.label} /> : null}
       </div>
     </div>
   );
