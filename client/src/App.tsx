@@ -5,6 +5,7 @@ import SignIn from "./pages/Singin";
 import { Blog } from "./pages/Blog";
 import { CreateBlog } from "./pages/CreateBlog";
 import { FullBlog } from "./pages/FullBlog";
+import { Checker } from "./pages/Checker";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
             path="/blogs/:id/update"
             element={<CreateBlog label="Update" />}
           />
-          <Route path="*" element={<div>Unknown route</div>} />
+          <Route path="*" element={<Checker />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

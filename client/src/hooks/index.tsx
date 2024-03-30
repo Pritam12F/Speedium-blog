@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { postsAtom, userInitial, userId_ } from "../atoms/atoms";
+import { useNavigate } from "react-router-dom";
 
 export const useUserInit = () => {
   const [userInit, setUserInit] = useRecoilState<string>(userInitial);
@@ -67,4 +68,25 @@ export const useBlogPosts = () => {
   }, []);
 
   return posts;
+};
+
+export const useCheckerHook = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("speedium-token");
+    const link = import.meta.env.VITE_BACKEND_URL + "/user/finduser";
+
+    axios
+      .post(link, {
+        token: token,
+      })
+      .then((res) => {
+        navigate("/blogs");
+      })
+      .catch((err: Error) => {
+        console.log("Failed, error: ", err);
+        navigate("/signin");
+      });
+  }, []);
 };

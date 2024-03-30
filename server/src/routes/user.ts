@@ -94,6 +94,7 @@ book.post("/finduser", async (c) => {
 
     return c.json({ name: user?.name, userId: user?.id });
   } catch (err) {
+    c.status(403);
     return c.text("ERROR!!!!");
   }
 });
