@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { postsAtom, userInitial, userId_ } from "../atoms/atoms";
-import { useNavigate } from "react-router-dom";
 
 export const useUserInit = () => {
   const [userInit, setUserInit] = useRecoilState<string>(userInitial);
@@ -70,23 +69,25 @@ export const useBlogPosts = () => {
   return posts;
 };
 
-export const useCheckerHook = () => {
-  const navigate = useNavigate();
+export const useCheckLoggedIn = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("speedium-token");
-    const link = import.meta.env.VITE_BACKEND_URL + "/user/finduser";
+  const token = localStorage.getItem("speedium-token");
+  const link = import.meta.env.VITE_BACKEND_URL + "/user/finduser";
 
-    axios
-      .post(link, {
-        token: token,
-      })
-      .then((res) => {
-        navigate("/blogs");
-      })
-      .catch((err: Error) => {
-        console.log("Failed, error: ", err);
-        navigate("/signin");
-      });
-  }, []);
+  axios
+    .post(link, {
+      token: token,
+    })
+    .then((res) => {
+      setIsLoading(false);
+      setIsLoggedIn(true);
+    })
+    .catch((err: Error) => {
+      setIsLoading(false);
+      setIsLoggedIn(false);
+    });
+
+  return { isLoading, isLoggedIn };
 };
