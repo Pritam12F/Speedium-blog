@@ -76,11 +76,11 @@ export const handleCreate = async (
   };
   axios
     .request(config)
-    .then((response) => {
+    .then(() => {
       setError(false);
       setSuccess(true);
     })
-    .catch((error: Error) => {
+    .catch(() => {
       setSuccess(false);
       setError(true);
     });
@@ -110,11 +110,11 @@ export const handleUpdate = async (
   };
   axios
     .request(config)
-    .then((response) => {
+    .then(() => {
       setError(false);
       setSuccess(true);
     })
-    .catch((error: Error) => {
+    .catch(() => {
       setSuccess(false);
       setError(true);
     });
