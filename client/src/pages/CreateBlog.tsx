@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { postsAtom, userId_, userInitial } from "../atoms/atoms";
+import { userId_, userInitial } from "../atoms/atoms";
 import { Button } from "../components/Button";
 import { Navbar } from "../components/Navbar";
 import { handleCreate, handleUpdate } from "../utils/OnClickHandlers";
 import { ErrorCrorUp, SuccessCrorUp } from "../components/Alerts";
 import { useNavigate, useParams } from "react-router-dom";
-import { cardProps } from "../components/BlogCards";
 
 export const CreateBlog = (props: { label: "Create" | "Update" }) => {
   const [title, setTitle] = useState("");
@@ -16,16 +15,12 @@ export const CreateBlog = (props: { label: "Create" | "Update" }) => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
-  const posts = useRecoilValue(postsAtom);
   const navigate = useNavigate();
-  const [current, setCurrent] = useState<cardProps | null>(null);
 
   useEffect(() => {
     if (!userId || !userInit) {
       navigate("/blogs");
     }
-    const findPost = posts.filter((obj: cardProps) => obj.id === id);
-    setCurrent(findPost[0]);
   }, [userId, userInit]);
 
   return (
@@ -47,7 +42,6 @@ export const CreateBlog = (props: { label: "Create" | "Update" }) => {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
-            value={props.label === "Update" ? current?.title : "Sample title"}
           ></input>
         </div>
         <div className="flex flex-col my-5">
@@ -61,9 +55,6 @@ export const CreateBlog = (props: { label: "Create" | "Update" }) => {
             onChange={(e) => {
               setContent(e.target.value);
             }}
-            value={
-              props.label === "Update" ? current?.content : "Sample content"
-            }
           ></textarea>
         </div>
         <Button
