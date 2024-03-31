@@ -44,7 +44,9 @@ export interface MyObject {
   author: string;
 }
 
-export const useBlogPosts = () => {
+export const useBlogPosts = (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   const [posts, setPosts] = useRecoilState(postsAtom);
 
   useEffect(() => {
@@ -59,9 +61,11 @@ export const useBlogPosts = () => {
       })
       .then((res) => {
         setPosts(res.data.posts);
+        setIsLoading(false);
       })
       .catch((e: Error) => {
         console.log(e);
+        setIsLoading(false);
       });
   }, []);
 

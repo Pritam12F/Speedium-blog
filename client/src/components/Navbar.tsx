@@ -16,7 +16,7 @@ export const Navbar = (props: NavbarType) => {
     <div className="flex justify-between items-center shadow-lg py-1 sticky top-0 bg-slate-200 rounded-b-lg">
       <div>
         <div
-          className="text-2xl font-semibold mx-4 cursor-pointer"
+          className="text-2xl font-semibold mx-4 cursor-pointer text-lime-500 bg-red-100 rounded-lg py-1 px-2 hover:text-blue-600"
           onClick={() => {
             navigate("/blogs");
           }}
