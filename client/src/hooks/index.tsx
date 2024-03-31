@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { postsAtom, userInitial, userId_ } from "../atoms/atoms";
+import { useNavigate } from "react-router-dom";
 
 export const useUserInit = () => {
   const [userInit, setUserInit] = useRecoilState<string>(userInitial);
   const [userId, setUserId] = useRecoilState<string>(userId_);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("speedium-token");
@@ -26,6 +28,7 @@ export const useUserInit = () => {
       })
       .catch((err: Error) => {
         console.log("Failed, error: ", err);
+        navigate("/signin");
       });
   }, []);
 
@@ -47,47 +50,20 @@ export const useBlogPosts = () => {
   useEffect(() => {
     const token = localStorage.getItem("speedium-token");
     const link = import.meta.env.VITE_BACKEND_URL + "/blog";
-    const config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: link,
-      headers: {
-        Authorization: token,
-      },
-    };
 
     axios
-      .request(config)
+      .get(link, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((res) => {
         setPosts(res.data.posts);
       })
-      .catch((err: Error) => {
-        console.log(err);
+      .catch((e: Error) => {
+        console.log(e);
       });
   }, []);
 
   return posts;
-};
-
-export const useCheckLoggedIn = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const token = localStorage.getItem("speedium-token");
-  const link = import.meta.env.VITE_BACKEND_URL + "/user/finduser";
-
-  axios
-    .post(link, {
-      token: token,
-    })
-    .then((res) => {
-      setIsLoading(false);
-      setIsLoggedIn(true);
-    })
-    .catch((err: Error) => {
-      setIsLoading(false);
-      setIsLoggedIn(false);
-    });
-
-  return { isLoading, isLoggedIn };
 };

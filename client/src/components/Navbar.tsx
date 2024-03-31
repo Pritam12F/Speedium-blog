@@ -1,19 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { useSetRecoilState } from "recoil";
-import { userInitial } from "../atoms/atoms";
+import { postsAtom, userId_, userInitial } from "../atoms/atoms";
 
 type NavbarType = {
   initial: string;
 };
 export const Navbar = (props: NavbarType) => {
   const navigate = useNavigate();
-  const setUserInit = useSetRecoilState(userInitial)
+  const setUserInit = useSetRecoilState(userInitial);
+  const setPosts = useSetRecoilState(postsAtom);
+  const setId = useSetRecoilState(userId_);
 
   return (
     <div className="flex justify-between items-center shadow-lg py-1 sticky top-0 bg-slate-200 rounded-b-lg">
       <div>
-        <div className="text-2xl font-semibold mx-4 cursor-pointer" onClick={()=>{navigate('/blogs')}}>Speedium</div>
+        <div
+          className="text-2xl font-semibold mx-4 cursor-pointer"
+          onClick={() => {
+            navigate("/blogs");
+          }}
+        >
+          Speedium
+        </div>
       </div>
       <div className="flex">
         <div className="mx-10 bg-green-400 rounded-full w-12 h-12 flex justify-center items-center font-semibold cursor-pointer">
@@ -25,6 +34,8 @@ export const Navbar = (props: NavbarType) => {
             localStorage.removeItem("speedium-token");
             navigate("/signin");
             setUserInit("");
+            setPosts([]);
+            setId("");
           }}
         />
       </div>

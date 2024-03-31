@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Quote } from "../components/Quote";
 import { Header } from "../components/AuthHeader";
 import { handleSignin } from "../utils/OnClickHandlers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorSignin } from "../components/Alerts";
 
 function SignIn() {
@@ -14,6 +14,12 @@ function SignIn() {
   const [pass, setPass] = useRecoilState(signInPass);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("speedium-token")) {
+      navigate("/blogs");
+    }
+  }, []);
 
   return (
     <div className="flex flex-col h-screen sm:grid grid-cols-2">

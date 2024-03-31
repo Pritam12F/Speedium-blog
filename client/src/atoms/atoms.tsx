@@ -37,5 +37,5 @@ export const postsAtom = atom({
 
 export const userId_ = atom({
   key: "userId",
-  default: "A",
+  default: "",
 });

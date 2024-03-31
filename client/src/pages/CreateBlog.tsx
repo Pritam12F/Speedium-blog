@@ -5,13 +5,9 @@ import { Button } from "../components/Button";
 import { Navbar } from "../components/Navbar";
 import { handleCreate, handleUpdate } from "../utils/OnClickHandlers";
 import { ErrorCrorUp, SuccessCrorUp } from "../components/Alerts";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-interface createOrUpdate {
-  label: "Create" | "Update";
-}
-
-export const CreateBlog = (props: createOrUpdate) => {
+export const CreateBlog = (props: { label: "Create" | "Update" }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const userId = useRecoilValue(userId_);
@@ -19,10 +15,13 @@ export const CreateBlog = (props: createOrUpdate) => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userId);
-  }, [userId]);
+    if (!userId || !userInit) {
+      navigate("/blogs");
+    }
+  }, [userId, userInit]);
 
   return (
     <div className="h-screen bg-gradient-to-br from-blue-500 to-green-500">

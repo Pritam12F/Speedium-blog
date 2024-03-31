@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { postsAtom, userInitial } from "../atoms/atoms";
 import { useEffect, useState } from "react";
@@ -11,11 +11,15 @@ export const FullBlog = () => {
   const posts = useRecoilValue(postsAtom);
   const [current, setCurrent] = useState<cardProps | null>(null);
   const useInit = useRecoilValue(userInitial);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!useInit) {
+      navigate("/blogs");
+    }
     const findPost = posts.filter((obj: cardProps) => obj.id === id);
     setCurrent(findPost[0]);
-  }, []);
+  }, [useInit]);
 
   return (
     <div>
