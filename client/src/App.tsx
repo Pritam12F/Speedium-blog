@@ -5,6 +5,7 @@ import { Blog } from "./pages/Blog";
 import { CreateBlog } from "./pages/CreateBlog";
 import { FullBlog } from "./pages/FullBlog";
 import { Checker } from "./pages/Checker";
+import { MyBlogs } from "./pages/MyBlogs";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/blogs" element={<Blog />} />
       <Route path="/blogs/create" element={<CreateBlog label="Create" />} />
-      <Route path="/blogs/:id" element={<FullBlog />} />
+      <Route path="/blogs/:id/:type" element={<FullBlog />} />
       <Route path="/blogs/:id/update" element={<CreateBlog label="Update" />} />
+      <Route path="/myposts" element={<MyBlogs />} />
       <Route path="*" element={<Checker />} />
     </Routes>
   );

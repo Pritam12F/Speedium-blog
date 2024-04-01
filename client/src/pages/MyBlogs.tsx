@@ -1,28 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import { Card } from "../components/BlogCards";
 import { Button } from "../components/Button";
 import { Navbar } from "../components/Navbar";
-import { useBlogPosts, useUserInit } from "../hooks";
-import { Skeletons } from "../components/Skeletons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { postsAtom, userId_, userInitial } from "../atoms/atoms";
+import { useRecoilValue } from "recoil";
+import { Card, cardProps } from "../components/BlogCards";
 
-export const Blog = () => {
-  const { userInit } = useUserInit();
-  const [isLoading, setIsLoading] = useState(true);
-  const posts = useBlogPosts(setIsLoading);
+export const MyBlogs = () => {
   const navigate = useNavigate();
+  const userId = useRecoilValue(userId_);
+  const userInit = useRecoilValue(userInitial);
+  const posts = useRecoilValue(postsAtom);
+  const [myPosts, setMyPosts] = useState([]);
 
-  if (isLoading) {
-    return (
-      <>
-        <Navbar initial={"A"} />
-        <Skeletons />
-        <Skeletons />
-        <Skeletons />
-        <Skeletons />
-      </>
-    );
-  }
+  useEffect(() => {
+    if (!userId) {
+      navigate("/blogs");
+    }
+    const filtered = posts.filter((post: cardProps) => post.authorId == userId);
+    setMyPosts(filtered);
+    console.log(filtered);
+  }, []);
+
   return (
     <div>
       <Navbar initial={userInit.toUpperCase()} />
@@ -47,9 +46,9 @@ export const Blog = () => {
         />
       </div>
       <div className="flex flex-col items-center mx-10 mt-4">
-        {posts
-          ? posts.map((el, index) => (
-              <Card post={el} type={"all"} key={index} />
+        {myPosts
+          ? myPosts.map((el, index) => (
+              <Card post={el} type="personal" key={index} />
             ))
           : null}
       </div>

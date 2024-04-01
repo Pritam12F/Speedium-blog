@@ -10,10 +10,23 @@ export interface cardProps {
   published: boolean;
   title: string;
 }
-export const Card = ({ post }: { post: cardProps }) => {
+export const Card = ({
+  post,
+  type,
+}: {
+  post: cardProps;
+  type: "all" | "personal";
+}) => {
   const posts: cardProps = post;
   return (
-    <Link to={`/blogs/${posts.id}`} className="min-w-full my-4">
+    <Link
+      to={
+        type == "all"
+          ? `/blogs/${posts.id}/${type}`
+          : `/blogs/${posts.id}/${type}`
+      }
+      className="min-w-full my-4"
+    >
       <div className="border-2 shadow-lg rounded-md p-5 min-w-full cursor-pointer">
         <div className="flex">
           <div className="bg-red-200 w-7 h-7 rounded-full flex justify-center items-center text-xs mr-3 font-semibold">
