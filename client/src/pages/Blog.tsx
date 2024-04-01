@@ -26,27 +26,19 @@ export const Blog = () => {
   return (
     <div>
       <Navbar initial={userInit.toUpperCase()} />
-      {posts ? (
-        <>
-          <div className="flex justify-center mt-4">
-            <Button
-              label="Create new Post"
-              onClick={() => {
-                navigate(`/blogs/create`);
-              }}
-            />
-          </div>
-          <div className="flex flex-col m-4 items-center">
-            {posts
-              ? posts.map((el, index) => <Card post={el} key={index} />)
-              : null}
-          </div>
-        </>
-      ) : (
-        <>
-          <div>Loading...</div>
-        </>
-      )}
+      <div className="flex justify-center mt-4">
+        <Button
+          label="Create new Post"
+          onClick={() => {
+            navigate(`/blogs/create`);
+          }}
+        />
+      </div>
+      <div className="flex flex-col items-center mx-10 mt-4">
+        {posts
+          ? posts.map((el, index) => <Card post={el} key={index} />)
+          : null}
+      </div>
     </div>
   );
 };

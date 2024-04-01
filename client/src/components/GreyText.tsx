@@ -11,13 +11,13 @@ export const GrayText = ({ type }: GrayTextInput) => {
     navigate(to);
   }
   return (
-    <div className="text-slate-500 px-4 py-2 text-base inline-block">
+    <div className="text-slate-500 px-4 py-2 text-sm flex flex-col sm:flex-row sm:text-base">
       <span className="mx-4">
         {type == "signup"
           ? "Already have an account?"
           : "Don't have an account?"}
       </span>
-      <button className="underline" onClick={onClickHandler}>
+      <button className="underline mx-auto" onClick={onClickHandler}>
         {type == "signup" ? "Log In" : "Sign up"}
       </button>
     </div>

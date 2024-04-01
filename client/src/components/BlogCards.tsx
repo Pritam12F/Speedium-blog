@@ -13,7 +13,7 @@ export interface cardProps {
 export const Card = ({ post }: { post: cardProps }) => {
   const posts: cardProps = post;
   return (
-    <Link to={`/blogs/${posts.id}`} className="min-w-full">
+    <Link to={`/blogs/${posts.id}`} className="min-w-full my-4">
       <div className="border-2 shadow-lg rounded-md p-5 min-w-full cursor-pointer">
         <div className="flex">
           <div className="bg-red-200 w-7 h-7 rounded-full flex justify-center items-center text-xs mr-3 font-semibold">
@@ -22,8 +22,8 @@ export const Card = ({ post }: { post: cardProps }) => {
           <div className="font-bold">{posts.title}</div>
         </div>
         <div className="mt-4">
-          {posts.content.length > 50
-            ? posts.content.substring(0, 49) + "...."
+          {posts.content.length > 21
+            ? posts.content.substring(0, 20) + "...."
             : posts.content}
         </div>
         <div className="mt-7 flex">
