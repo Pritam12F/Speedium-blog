@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { postsAtom, userId_, userInitial } from "../atoms/atoms";
 import { useRecoilValue } from "recoil";
 import { Card, cardProps } from "../components/BlogCards";
+import { NoPosts } from "../components/NoPosts";
 
 export const MyBlogs = () => {
   const navigate = useNavigate();
@@ -46,11 +47,13 @@ export const MyBlogs = () => {
         />
       </div>
       <div className="flex flex-col items-center mx-10 mt-4">
-        {myPosts
-          ? myPosts.map((el, index) => (
-              <Card post={el} type="personal" key={index} />
-            ))
-          : null}
+        {myPosts.length != 0 ? (
+          myPosts.map((el, index) => (
+            <Card post={el} type="personal" key={index} />
+          ))
+        ) : (
+          <NoPosts />
+        )}
       </div>
     </div>
   );
