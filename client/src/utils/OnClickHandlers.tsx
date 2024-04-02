@@ -65,13 +65,17 @@ export const handleCreate = async (
     content: content,
     authorId: userId,
   };
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: link,
+    headers: {
+      Authorization: localStorage.getItem("speedium-token"),
+    },
+    data: data,
+  };
   axios
-    .post(link, {
-      headers: {
-        Authorization: localStorage.getItem("speedium-token"),
-      },
-      data: data,
-    })
+    .request(config)
     .then(() => {
       setError(false);
       setSuccess(true);
@@ -95,19 +99,24 @@ export const handleUpdate = async (
     content: content,
     id: id,
   };
+  const config = {
+    method: "put",
+    maxBodyLength: Infinity,
+    url: link,
+    headers: {
+      Authorization: localStorage.getItem("speedium-token"),
+    },
+    data: data,
+  };
   axios
-    .put(link, {
-      headers: {
-        Authorization: localStorage.getItem("speedium-token"),
-      },
-      data: data,
-    })
+    .request(config)
     .then(() => {
       setError(false);
       setSuccess(true);
     })
-    .catch(() => {
+    .catch((err: Error) => {
       setSuccess(false);
       setError(true);
+      console.log(err);
     });
 };
