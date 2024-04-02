@@ -4,8 +4,9 @@ import { Navbar } from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { postsAtom, userId_, userInitial } from "../atoms/atoms";
 import { useRecoilValue } from "recoil";
-import { Card, cardProps } from "../components/BlogCards";
+import { Card } from "../components/BlogCards";
 import { NoPosts } from "../components/NoPosts";
+import { cardProps } from "../types";
 
 export const MyBlogs = () => {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ export const MyBlogs = () => {
     }
     const filtered = posts.filter((post: cardProps) => post.authorId == userId);
     setMyPosts(filtered);
-    console.log(filtered);
   }, []);
 
   return (

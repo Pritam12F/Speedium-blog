@@ -1,12 +1,6 @@
-type MyFunctionType = (arg: React.ChangeEvent<HTMLInputElement>) => void;
+import { InputLabelType2 } from "../types";
 
-export type InputLabelType = {
-  label: "Username" | "Email" | "Password";
-  id: string;
-  onChange: MyFunctionType;
-};
-
-export const InputBox = (props: InputLabelType) => {
+export const InputBox = (props: InputLabelType2) => {
   return (
     <div>
       <label

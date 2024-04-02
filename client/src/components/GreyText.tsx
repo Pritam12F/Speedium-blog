@@ -1,10 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-type GrayTextInput = {
-  type: "signup" | "signin";
-};
-
-export const GrayText = ({ type }: GrayTextInput) => {
+export const GrayText = ({ type }: { type: "signup" | "signin" }) => {
   const navigate = useNavigate();
   const to = type == "signup" ? "/signin" : "/signup";
   function onClickHandler() {

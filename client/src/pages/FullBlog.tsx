@@ -2,9 +2,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { postsAtom, userInitial } from "../atoms/atoms";
 import { useEffect, useState } from "react";
-import { cardProps } from "../components/BlogCards";
 import { Button } from "@chakra-ui/react";
 import { Navbar } from "../components/Navbar";
+import { cardProps } from "../types";
 
 export const FullBlog = () => {
   const { id, type } = useParams();

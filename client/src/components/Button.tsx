@@ -1,7 +1,4 @@
-export type InputLabelType = {
-  label: string;
-  onClick: (arg: React.MouseEvent<HTMLButtonElement>) => void;
-};
+import { InputLabelType } from "../types";
 
 export const Button = (props: InputLabelType) => {
   return (

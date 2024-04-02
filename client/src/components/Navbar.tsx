@@ -3,10 +3,7 @@ import { Button } from "./Button";
 import { useSetRecoilState } from "recoil";
 import { postsAtom, userId_, userInitial } from "../atoms/atoms";
 
-type NavbarType = {
-  initial: string;
-};
-export const Navbar = (props: NavbarType) => {
+export const Navbar = (props: { initial: string }) => {
   const navigate = useNavigate();
   const setUserInit = useSetRecoilState(userInitial);
   const setPosts = useSetRecoilState(postsAtom);

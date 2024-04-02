@@ -1,15 +1,6 @@
 import { Link } from "react-router-dom";
+import { cardProps } from "../types";
 
-export interface cardProps {
-  author: {
-    name: string;
-  };
-  authorId: string;
-  content: string;
-  id: string;
-  published: boolean;
-  title: string;
-}
 export const Card = ({
   post,
   type,

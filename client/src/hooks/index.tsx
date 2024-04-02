@@ -35,15 +35,6 @@ export const useUserInit = () => {
   return { userInit, userId };
 };
 
-export interface MyObject {
-  id: string;
-  title: string;
-  content: string;
-  published: boolean;
-  authorId: string;
-  author: string;
-}
-
 export const useBlogPosts = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {

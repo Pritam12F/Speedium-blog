@@ -1,11 +1,7 @@
 import { GrayText } from "./GreyText";
 import SmallH from "./SmallHeading";
 
-type auth = {
-  page: "signup" | "signin";
-};
-
-export const Header = ({ page }: auth) => {
+export const Header = ({ page }: { page: "signup" | "signin" }) => {
   return (
     <div className="flex flex-col items-center">
       <SmallH
