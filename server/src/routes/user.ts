@@ -40,6 +40,7 @@ book.post("/signup", async (c) => {
 
     return c.json({ result: res, token: token });
   } catch (err) {
+    console.log(err);
     c.status(403);
     return c.text("Some error occured while trying to signup");
   }
